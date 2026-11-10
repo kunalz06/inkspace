@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,user-scalable=no"/>
+<meta name="theme-color" content="#151c2b"/><meta name="description" content="An offline-first notebook, whiteboard, and document-annotation workspace"/>
+<link rel="manifest" href="/manifest.webmanifest"/><link rel="icon" href="/assets/icon.svg" type="image/svg+xml"/>
+<title>InkSpace — Draw your thinking</title>
+<link rel="stylesheet" href="/src/styles.css"/>
+<script src="/config.js"></script>
+<script type="module" src="/src/app.js"></script>
+</head>
+<body>
+<div id="app">
+<aside class="sidebar" id="sidebar">
+  <div class="brand"><span class="brand-mark">✦</span><span>InkSpace<small>your ideas, in ink</small></span><button class="icon-btn side-close" id="closeSidebar" title="Close navigation">✕</button></div>
+  <div class="side-label">YOUR SPACE</div>
+  <div class="creation-actions">
+    <button data-create="notebook" class="create-btn"><span class="create-icon purple">▤</span><span>New notebook</span><b>＋</b></button>
+    <button data-create="board" class="create-btn"><span class="create-icon blue">◇</span><span>New whiteboard</span><b>＋</b></button>
+    <button class="create-btn" id="importBtn"><span class="create-icon amber">↥</span><span>Import PDF / image</span><b>＋</b></button>
+  </div>
+  <div class="side-label" style="margin-top:30px">RECENT WORKSPACES <span id="docCount">0</span></div>
+  <div id="docList" class="doc-list"></div>
+  <div class="sidebar-bottom"><div class="offline-note"><span class="status-dot"></span><span id="storageText">Saved on this device</span></div><button class="side-setting" id="settingsBtn">⚙ &nbsp; Settings & sync</button></div>
+</aside>
+<div class="main-panel">
+  <header class="topbar"><div class="top-title"><button class="icon-btn mobile-menu" id="openSidebar" title="Open menu">☰</button><div class="crumbs">Workspace <span>›</span> <strong id="currentTitle">Welcome to InkSpace</strong></div></div>
+    <div class="top-actions"><span id="saveState" class="save-state">✓ Saved locally</span><button class="subtle-btn" id="shareBtn">⇩ <span>Export PNG</span></button><button class="primary-btn" id="syncBtn">☁ <span>Sync</span></button></div>
+  </header>
+  <div class="toolbar" id="toolbar"><div class="tool-set">
+    <button class="tool active" data-tool="pen" title="Pen">✎ <span>Pen</span></button>
+    <button class="tool" data-tool="highlighter" title="Highlighter">▰ <span>Highlight</span></button>
+    <button class="tool" data-tool="eraser" title="Eraser">◌ <span>Erase</span></button>
+    <button class="tool" data-tool="pan" title="Move canvas">✥ <span>Move</span></button>
+  </div><span class="tool-divider"></span>
+    <div class="colors" aria-label="Ink color"><button class="swatch selected" data-color="#242f44" style="--swatch:#242f44" title="Midnight"></button><button class="swatch" data-color="#6773ee" style="--swatch:#6773ee" title="Violet"></button><button class="swatch" data-color="#ed6975" style="--swatch:#ed6975" title="Coral"></button><button class="swatch" data-color="#1caa91" style="--swatch:#1caa91" title="Green"></button></div>
+    <span class="tool-divider"></span><label class="thickness">Size <input id="brushSize" type="range" min="2" max="18" value="4"/><span id="sizeReadout">4</span></label>
+    <div class="tool-spacer"></div><button class="icon-btn" id="undoBtn" title="Undo">↶</button><button class="icon-btn" id="redoBtn" title="Redo">↷</button>
+  </div>
+  <div class="workspace" id="workspace"><div class="workspace-label"><span id="modeLabel">NOTEBOOK</span> <span class="small-dot">·</span> <span id="pageTitle">Page 1</span></div><canvas id="canvas" aria-label="Drawing surface"></canvas>
+    <div class="welcome" id="welcome"><div class="welcome-icon">✦</div><div class="welcome-eyebrow">WELCOME TO YOUR CREATIVE SPACE</div><h1>Make room for<br/><em>every idea.</em></h1><p>A quiet home for handwritten notes, infinite thinking, and thoughtful annotations. Your work stays with you—even offline.</p><div class="welcome-actions"><button class="primary-btn large" data-create="notebook">Start a notebook ↗</button><button class="subtle-btn large" data-create="board">Open a whiteboard</button></div><div class="welcome-caption">✎ Finger & stylus friendly &nbsp; · &nbsp; ◉ Intelligent touch filtering</div></div>
+    <div class="bottom-controls" id="bottomControls"><div class="page-controls" id="pageControls"><button class="icon-btn" id="prevPage" title="Previous page">‹</button><span id="pageCounter">1 / 1</span><button class="icon-btn" id="nextPage" title="Next page">›</button><button class="add-page" id="addPage" title="Add page">＋ Page</button></div><div class="zoom-controls"><button class="icon-btn" id="zoomOut">−</button><span id="zoomLevel">80%</span><button class="icon-btn" id="zoomIn">＋</button><button class="icon-btn" id="zoomReset" title="Reset view">⊡</button></div></div>
+  </div>
+  <div class="footer-hint"><span>✦ Best experience: touch with your pen or finger first, then rest your palm.</span><span id="engineStatus">Rule-based + on-device learning</span></div>
+</div>
+</div>
+<div class="modal-backdrop hidden" id="modalBackdrop"><div class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle"><button class="icon-btn modal-close" id="modalClose">✕</button><h2 id="modalTitle">Settings & sync</h2><div id="modalContent"></div></div></div>
+<input id="fileInput" type="file" accept="application/pdf,image/*,.pdf" hidden/>
+<div id="toast" class="toast" role="status" aria-live="polite"></div>
+</body>
+</html>
