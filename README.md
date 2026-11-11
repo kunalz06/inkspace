@@ -1,12 +1,12 @@
 # InkSpace — Android-first offline handwriting workspace
 
-**Status: early functional MVP, not yet deployed.** InkSpace provides:
+**Status: early functional MVP deployed to [inkspace-notes.netlify.app](https://inkspace-notes.netlify.app).** InkSpace provides:
 
 - Multi-page notebooks (ruled paper), infinite whiteboards, image annotation, and PDF page annotation.
 - Pen, highlighter, eraser, pan, zoom, undo/redo, single-active-pointer input.
 - Rule-based palm-contact suppression, experimental local logistic classifier, optional personal calibration (8 finger + 8 palm samples). No guaranteed palm rejection. The bootstrap classifier uses **synthetic** examples and is **not a validated pretrained model**.
 - Local storage in IndexedDB, service worker, installable PWA shell, and PNG/JSON exports.
-- Optional Supabase account and handwritten-stroke sync once a dedicated Supabase project is configured.
+- Optional Supabase account and handwritten-stroke sync through the dedicated `inkspace-notes` Supabase project (cloud sync requires signing in).
 
 ## Run locally
 
@@ -21,7 +21,7 @@ Open http://localhost:8000 in Chrome. For real Android Chrome, deploy to HTTPS; 
 
 ## Deploy to Netlify
 
-Netlify site `inkspace-notes` has been reserved, but no deployment was created automatically. Create a GitHub repository (or import this source there) and connect it to the Netlify project. The included `netlify.toml` runs `npm run build` and serves `dist/`.
+Netlify site `inkspace-notes` is linked to this repository's `main` branch. Pushes automatically build via `npm run build` and publish `dist/`.
 
 On Netlify, set **build** environment variables after creating a dedicated Supabase project:
 
@@ -32,7 +32,7 @@ Never add a service-role or secret key to a browser build. Changes to env vars r
 
 ## Supabase setup
 
-Create a **dedicated** project, then apply `supabase/migrations/20261110000100_workspace_docs.sql` through the migration workflow. Email/password sign-in uses Supabase Auth. Row Level Security restricts each user to their own `workspace_docs` rows. Before production use, test signup, login, RLS isolation, cross-device sync, refresh-token expiration, and conflicts.
+The dedicated **free** Supabase project `dtonxfmksurzggjrydfo` (Mumbai region) has been created, and the `workspace_docs` migration applied. Email/password sign-in uses Supabase Auth. Row Level Security restricts each user to their own `workspace_docs` rows. Before production use, test signup, login, RLS isolation, cross-device sync, refresh-token expiration, and conflicts.
 
 ## Limitations of this MVP
 
@@ -50,3 +50,12 @@ Create a **dedicated** project, then apply `supabase/migrations/20261110000100_w
 ## Privacy
 
 Touch calibration samples remain on-device, stored only as model weights in `localStorage`. The app does not upload touch samples or raw handwriting for model training.
+
+## Deployment links
+
+- App: https://inkspace-notes.netlify.app
+- Source: https://github.com/kunalz06/inkspace
+- Netlify dashboard: https://app.netlify.com/projects/inkspace-notes
+- Supabase project: https://supabase.com/dashboard/project/dtonxfmksurzggjrydfo
+
+The browser bundle contains only a Supabase publishable key. Never ship a secret/service-role key to the client.
